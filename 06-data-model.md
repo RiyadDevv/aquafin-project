@@ -1,7 +1,7 @@
 # Data Model
 
 ## Projectnaam
-Aquafin Smart Maintenance Platform
+Aquafin Technieker Platform
 
 ---
 
@@ -30,45 +30,62 @@ De applicatie gebruikt volgende hoofdentiteiten:
 | RainfallData | Historische neerslaggegevens (seed data) |
 | RiskResult | Berekende risicoresultaten per seizoen |
 
-> **Opmerking over authenticatie:** Voor dit project wordt geen volledige authenticatie geïmplementeerd. De naam van de technieker wordt als vrij tekstveld opgeslagen bij een bestelling. Reden: de scope van dit project ligt bij risicoanalyse, materiaalbeheer en bestellen — niet bij gebruikersbeheer. Dit is een bewuste, gedocumenteerde vereenvoudiging.
+> **Opmerking over authenticatie:** Voor dit project wordt geen volledige authenticatie geïmplementeerd. De naam van de technieker wordt als vrij tekstveld opgeslagen bij een bestelling. Reden: de scope van dit project ligt bij risicoanalyse, materiaalbeheer en bestellen, niet bij gebruikersbeheer. Dit is een bewuste, gedocumenteerde vereenvoudiging.
 
 ---
 
 # 3. Entity Relationship Diagram
 
-```text
-┌────────────┐       ┌────────────────┐
-│  Category  │       │    Material    │
-│────────────│       │────────────────│
-│ id (PK)    │◄──────│ id (PK)        │
-│ name       │  1:N  │ name           │
-└────────────┘       │ categoryId(FK) │
-                     │ isFloodTool    │
-                     │ isActive       │
-                     └───────┬────────┘
-                             │ 1:N
-                             ▼
-┌────────────┐       ┌────────────────┐
-│   Order    │       │   OrderItem    │
-│────────────│       │────────────────│
-│ id (PK)    │◄──────│ id (PK)        │
-│ technician │  1:N  │ orderId (FK)   │
-│ Name       │       │ materialId(FK) │──► Material
-│ deliveryDt │       │ quantity       │
-│ createdAt  │       └────────────────┘
-│ status     │
-└────────────┘
+```mermaid
+erDiagram
+    Category {
+        int id PK
+        string name
+    }
 
-┌──────────────┐       ┌────────────────┐
-│ RainfallData │       │   RiskResult   │
-│──────────────│       │────────────────│
-│ id (PK)      │──────►│ id (PK)        │
-│ year         │ berek.│ year           │
-│ month        │       │ season         │
-│ rainfallMm   │       │ predictedMm    │
-└──────────────┘       │ threshold      │
-                       │ riskLevel      │
-                       └────────────────┘
+    Material {
+        int id PK
+        string name
+        int categoryId FK
+        int isFloodTool
+        int isActive
+    }
+
+    Order {
+        int id PK
+        string technicianName
+        string deliveryDate
+        string createdAt
+        string status
+    }
+
+    OrderItem {
+        int id PK
+        int orderId FK
+        int materialId FK
+        int quantity
+    }
+
+    RainfallData {
+        int id PK
+        int year
+        int month
+        real rainfallMm
+    }
+
+    RiskResult {
+        int id PK
+        int year
+        string season
+        real predictedRainfall
+        real threshold
+        string riskLevel
+    }
+
+    Category ||--o{ Material : "heeft"
+    Material ||--o{ OrderItem : "zit in"
+    Order ||--o{ OrderItem : "bevat"
+    RainfallData ||--o{ RiskResult : "genereert"
 ```
 
 ---
@@ -77,14 +94,12 @@ De applicatie gebruikt volgende hoofdentiteiten:
 
 ## 4.1 Category
 
-Materiaalcategorieën voor het groeperen van materialen.
-
 | Veld | Type | Constraints | Beschrijving |
 |---|---|---|---|
 | id | INTEGER | PRIMARY KEY, AUTOINCREMENT | Unieke identifier |
 | name | TEXT | NOT NULL, UNIQUE | Naam van de categorie |
 
-**Seed data (voorbeelden):**
+**Seed data voorbeelden:**
 - Bevestigingsmateriaal
 - Gereedschap
 - Technisch onderhoud
@@ -105,9 +120,7 @@ Alle beschikbare materialen in de catalogus.
 | isFloodTool | INTEGER | DEFAULT 0 (0=nee, 1=ja) | Relevant bij overstromingsrisico |
 | isActive | INTEGER | DEFAULT 1 (0=nee, 1=ja) | Beschikbaar in catalogus |
 
-> **Opmerking:** SQLite heeft geen native BOOLEAN type. Waarden 0 en 1 worden gebruikt als boolean vervanging.
-
-**Voorbeelden flood tools (isFloodTool = 1):**
+**Voorbeelden flood tools:**
 - Dompelpomp
 - Rioolstop
 - Slangenwagen
@@ -183,100 +196,7 @@ Berekende risicoresultaten per seizoen en jaar.
 
 ---
 
-# 5. Relaties
-
-## Category → Material (1:N)
-
-```text
-Één categorie bevat nul of meer materialen.
-Elk materiaal behoort tot precies één categorie.
-```
-
-## Order → OrderItem (1:N)
-
-```text
-Één bestelling bevat één of meer orderregels.
-Elke orderregel behoort tot precies één bestelling.
-```
-
-## Material → OrderItem (1:N)
-
-```text
-Één materiaal kan voorkomen in nul of meer orderregels.
-Elke orderregel verwijst naar precies één materiaal.
-```
-
-## RainfallData → RiskResult (logische koppeling)
-
-```text
-Historische neerslagdata wordt verwerkt door de Risk Analysis Engine
-om RiskResult-records te genereren. Er is geen directe foreign key,
-omdat de berekening runtime plaatsvindt.
-```
-
----
-
-# 6. SQL Schema
-
-```sql
-CREATE TABLE Category (
-  id   INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT    NOT NULL UNIQUE
-);
-
-CREATE TABLE Material (
-  id          INTEGER PRIMARY KEY AUTOINCREMENT,
-  name        TEXT    NOT NULL,
-  categoryId  INTEGER NOT NULL,
-  isFloodTool INTEGER NOT NULL DEFAULT 0,
-  isActive    INTEGER NOT NULL DEFAULT 1,
-  FOREIGN KEY (categoryId) REFERENCES Category(id)
-);
-
-CREATE TABLE "Order" (
-  id              INTEGER PRIMARY KEY AUTOINCREMENT,
-  technicianName  TEXT    NOT NULL,
-  deliveryDate    TEXT    NOT NULL,
-  createdAt       TEXT    DEFAULT CURRENT_TIMESTAMP,
-  status          TEXT    NOT NULL DEFAULT 'pending'
-);
-
-CREATE TABLE OrderItem (
-  id         INTEGER PRIMARY KEY AUTOINCREMENT,
-  orderId    INTEGER NOT NULL,
-  materialId INTEGER NOT NULL,
-  quantity   INTEGER NOT NULL CHECK(quantity > 0),
-  FOREIGN KEY (orderId)    REFERENCES "Order"(id),
-  FOREIGN KEY (materialId) REFERENCES Material(id)
-);
-
-CREATE TABLE RainfallData (
-  id          INTEGER PRIMARY KEY AUTOINCREMENT,
-  year        INTEGER NOT NULL,
-  month       INTEGER NOT NULL CHECK(month BETWEEN 1 AND 12),
-  rainfallMm  REAL    NOT NULL
-);
-
-CREATE TABLE RiskResult (
-  id                 INTEGER PRIMARY KEY AUTOINCREMENT,
-  year               INTEGER NOT NULL,
-  season             TEXT    NOT NULL,
-  predictedRainfall  REAL    NOT NULL,
-  threshold          REAL    NOT NULL,
-  riskLevel          TEXT    NOT NULL
-);
-```
----
-
-# 7. Designkeuzes
-
-## SQLite als database
-
-SQLite is gekozen omdat het geen serverinstallatie vereist. De database leeft als één bestand in de projectmap en integreert eenvoudig met Node.js via `better-sqlite3`.
-
-## Forecasts worden dynamisch berekend
-
-RiskResult-records worden runtime berekend en kunnen optioneel gecacht worden, maar worden niet permanent opgeslagen als primaire bron van waarheid. Dit vermijdt synchronisatieproblemen met de onderliggende neerslagdata.
+# 5. Designkeuzes
 
 ## Soft delete voor materialen
 
@@ -292,6 +212,6 @@ Gebruikersbeheer en authenticatie vallen buiten de scope van dit project. De naa
 
 ---
 
-# 9. Conclusie
+# 6. Conclusie
 
-Het datamodel ondersteunt alle kernfunctionaliteiten op een onderhoudbare en uitbreidbare manier. De keuze voor SQLite, soft deletes en expliciete flood tool markering maakt de implementatie eenvoudig zonder in te boeten op functionaliteit.
+Het datamodel ondersteunt alle kernfunctionaliteiten op een onderhoudbare en uitbreidbare manier. De keuze voor soft deletes en expliciete flood tool markering maakt de implementatie eenvoudig zonder in te boeten op functionaliteit.

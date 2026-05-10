@@ -1,13 +1,13 @@
 # User Stories
 
 ## Projectnaam
-Aquafin Smart Maintenance Platform
+Aquafin Technieker Platform
 
 ---
 
 # 1. Introductie
 
-Dit document beschrijft de gebruikersverhalen (user stories) voor de Aquafin Smart Maintenance Platform applicatie.
+Dit document beschrijft de user stories voor de Aquafin Technieker Platform applicatie.
 
 Elke user story beschrijft:
 - welke gebruiker een actie uitvoert
@@ -24,7 +24,6 @@ De user stories vormen de basis voor de requirements, implementatie en testing.
 | Rol | Beschrijving |
 |---|---|
 | Technieker | Voert onderhoud uit op het terrein, bestelt materiaal, raadpleegt risico's |
-| Planner | Analyseert risicoperiodes en plant onderhoudswerken preventief |
 | Beheerder | Beheert de materiaalcatalogus (toevoegen, verwijderen, categoriseren) |
 
 ---
@@ -45,13 +44,13 @@ zodat ik de nodige middelen heb om onderhoudswerken uit te voeren.
 
 **Acceptatiecriteria:**
 
-- Given ik ben op de bestelpagina
-- When ik één of meerdere materialen selecteer en een leverdatum kies
-- Then kan ik de bestelling bevestigen en verschijnt er een bevestigingsmelding
+- Given: ik ben op de bestelpagina
+- When: ik één of meerdere materialen selecteer en een leverdatum kies
+- Then: kan ik de bestelling bevestigen en verschijnt er een bevestigingsmelding
 
-- Given ik geen materialen heb geselecteerd
-- When ik probeer te bevestigen
-- Then toont het systeem een foutmelding "Selecteer minstens één materiaal"
+- Given: ik geen materialen heb geselecteerd
+- When: ik probeer te bevestigen
+- Then: toont het systeem een foutmelding "Selecteer minstens één materiaal"
 
 ---
 
@@ -65,17 +64,17 @@ zodat het materiaal tijdig aanwezig is voor mijn geplande onderhoud.
 
 **Acceptatiecriteria:**
 
-- Given ik ben op de bestelpagina
-- When ik een datum invul in het datumveld
-- Then wordt die datum opgeslagen bij de bestelling
+- Given: ik ben op de bestelpagina
+- When: ik een datum invul in het datumveld
+- Then: wordt die datum opgeslagen bij de bestelling
 
-- Given ik geen datum invul
-- When ik probeer te bevestigen
-- Then toont het systeem een foutmelding "Leverdatum is verplicht"
+- Given: ik geen datum invul
+- When: ik probeer te bevestigen
+- Then: toont het systeem een foutmelding "Leverdatum is verplicht"
 
-- Given ik een datum in het verleden invul
-- When ik probeer te bevestigen
-- Then toont het systeem een foutmelding "Kies een datum in de toekomst"
+- Given: ik een datum invul die in het verleden ligt
+- When: ik probeer te bevestigen
+- Then: toont het systeem een foutmelding "Kies een datum in de toekomst"
 
 ---
 
@@ -89,13 +88,13 @@ zodat ik weet wat ik kan bestellen.
 
 **Acceptatiecriteria:**
 
-- Given ik navigeer naar de materiaallijst
-- When de pagina laadt
-- Then zie ik een overzicht van alle actieve materialen, gesorteerd per categorie
+- Given: ik navigeer naar de materiaallijst
+- When: de pagina laadt
+- Then: zie ik een overzicht van alle beschikbare materialen
 
-- Given er zijn materialen beschikbaar
-- When ik zoek op een naam of categorie
-- Then worden enkel de overeenkomende materialen getoond
+- Given: er zijn materialen beschikbaar
+- When: ik zoek op een naam of categorie
+- Then: worden enkel de overeenkomende materialen getoond
 
 ---
 
@@ -109,13 +108,13 @@ zodat ik snel kan reageren zonder zelf te hoeven zoeken.
 
 **Acceptatiecriteria:**
 
-- Given het huidige of voorspelde seizoen heeft een hoog overstromingsrisico
-- When ik de materiaallijst of het dashboard open
-- Then verschijnen flood-gerelateerde tools bovenaan met een visuele markering (bv. ster of badge)
+- Given: het huidige of voorspelde seizoen heeft een hoog of gemiddeld overstromingsrisico
+- When: ik de materiaallijst of het dashboard open
+- Then: verschijnen flood-gerelateerde tools bovenaan met een visuele markering
 
-- Given het risico is laag
-- When ik de materiaallijst open
-- Then worden flood tools niet speciaal geprioriteerd
+- Given: het risico is laag
+- When: ik de materiaallijst open
+- Then: worden flood tools niet speciaal geprioriteerd
 
 ---
 
@@ -129,61 +128,25 @@ zodat ik voorbereid ben op mogelijke interventies.
 
 **Acceptatiecriteria:**
 
-- Given ik open het dashboard
-- When de pagina laadt
-- Then zie ik het risiconiveau van het huidige seizoen (Laag / Gemiddeld / Hoog)
+- Given: ik open het dashboard
+- When: de pagina laadt
+- Then: zie ik het risiconiveau van het huidige seizoen (Laag / Gemiddeld / Hoog)
 
-- Given ik navigeer naar de risicoanalyse
-- When de pagina laadt
-- Then zie ik een overzicht van de risico's voor de komende 5 jaar per seizoen
+- Given: ik open de risicoanalyse pagina
+- When: de pagina laadt
+- Then: zie ik per jaar en per seizoen het voorspelde risiconiveau voor de komende 5 jaar
 
----
-
-## 3.2 Planner
-
----
-
-### US-06 - Risicoperiodes analyseren
-
-```
-Als planner
-wil ik een overzicht zien van risicomaanden voor de komende 5 jaar
-zodat ik preventieve maatregelen kan plannen.
-```
-
-**Acceptatiecriteria:**
-
-- Given ik open de risicoanalyse pagina
-- When de pagina laadt
-- Then zie ik per jaar en per seizoen het voorspelde risiconiveau
-
-- Given een seizoen heeft een hoog risico
-- When ik dat seizoen bekijk
-- Then is het visueel duidelijk onderscheiden van lage/gemiddelde risico's (bv. rode kleur)
+- Given: een seizoen heeft een hoog risico
+- When: ik dat seizoen bekijk
+- Then: is het visueel onderscheiden van lage en gemiddelde risico's via kleurcodering
 
 ---
 
-### US-07 - Prioritaire materialen bepalen
-
-```
-Als planner
-wil ik weten welke materialen prioritair zijn tijdens risicoperiodes
-zodat ik onderhoudswerken efficiënter kan voorbereiden.
-```
-
-**Acceptatiecriteria:**
-
-- Given er is een periode met hoog risico gedetecteerd
-- When ik de aanbevelingssectie bekijk
-- Then zie ik een lijst van aanbevolen flood tools voor die periode
+## 3.2 Beheerder
 
 ---
 
-## 3.3 Beheerder
-
----
-
-### US-08 - Materiaal toevoegen
+### US-06 - Materiaal toevoegen
 
 ```
 Als beheerder
@@ -193,17 +156,17 @@ zodat techniekers altijd beschikken over een up-to-date lijst.
 
 **Acceptatiecriteria:**
 
-- Given ik ben op de beheerderспagina
-- When ik een naam, categorie invul en bevestig
-- Then verschijnt het nieuw materiaal in de catalogus
+- Given: ik ben op de beheerderspagina
+- When: ik een naam en categorie invul en bevestig
+- Then: verschijnt het nieuwe materiaal in de catalogus
 
-- Given ik een naam invul die al bestaat
-- When ik probeer op te slaan
-- Then toont het systeem een waarschuwing
+- Given: ik een naam invul die al bestaat
+- When: ik probeer op te slaan
+- Then: toont het systeem een waarschuwing
 
 ---
 
-### US-09 - Materiaal verwijderen
+### US-07 - Materiaal verwijderen
 
 ```
 Als beheerder
@@ -213,17 +176,17 @@ zodat verouderde of niet-beschikbare items niet meer zichtbaar zijn.
 
 **Acceptatiecriteria:**
 
-- Given ik selecteer een materiaal om te verwijderen
-- When ik de verwijdering bevestig
-- Then verdwijnt het materiaal uit de actieve catalogus
+- Given: ik selecteer een materiaal om te verwijderen
+- When: ik de verwijdering bevestig
+- Then: verdwijnt het materiaal uit de actieve catalogus
 
-- Given een materiaal is onderdeel van een bestaande bestelling
-- When ik het probeer te verwijderen
-- Then wordt het materiaal gemarkeerd als inactief in plaats van volledig verwijderd
+- Given: een materiaal is onderdeel van een bestaande bestelling
+- When: ik het probeer te verwijderen
+- Then: wordt het materiaal gemarkeerd als inactief in plaats van volledig verwijderd
 
 ---
 
-### US-10 - Categorieën beheren
+### US-08 - Categorieën beheren
 
 ```
 Als beheerder
@@ -233,13 +196,13 @@ zodat techniekers snel het juiste materiaal vinden.
 
 **Acceptatiecriteria:**
 
-- Given ik voeg een materiaal toe
-- When ik een categorie kies uit de lijst
-- Then wordt het materiaal correct ingedeeld in die categorie
+- Given: ik voeg een materiaal toe
+- When: ik een categorie kies uit de lijst
+- Then: wordt het materiaal correct ingedeeld in die categorie
 
-- Given ik filter op een categorie
-- When de lijst geladen is
-- Then zie ik enkel materialen van die categorie
+- Given: ik filter op een categorie
+- When: de lijst geladen is
+- Then: zie ik enkel materialen van die categorie
 
 ---
 
@@ -250,16 +213,14 @@ zodat techniekers snel het juiste materiaal vinden.
 | US-01 | Technieker | Materiaal bestellen | Must have |
 | US-02 | Technieker | Leverdatum kiezen | Must have |
 | US-03 | Technieker | Catalogus raadplegen | Must have |
-| US-04 | Technieker | Aanbevolen tools bekijken | Should have |
-| US-05 | Technieker | Risico bekijken | Must have |
-| US-06 | Planner | Risicoperiodes analyseren | Must have |
-| US-07 | Planner | Prioritaire materialen | Should have |
-| US-08 | Beheerder | Materiaal toevoegen | Must have |
-| US-09 | Beheerder | Materiaal verwijderen | Must have |
-| US-10 | Beheerder | Categorieën beheren | Should have |
+| US-04 | Technieker | Aanbevolen tools bekijken | Must have |
+| US-05 | Technieker | Overstromingsrisico bekijken | Must have |
+| US-06 | Beheerder | Materiaal toevoegen | Must have |
+| US-07 | Beheerder | Materiaal verwijderen | Must have |
+| US-08 | Beheerder | Categorieën beheren | Should have |
 
 ---
 
 # 5. Conclusie
 
-De user stories beschrijven alle kernfunctionaliteiten vanuit het perspectief van de drie gebruikersrollen. De acceptatiecriteria laten toe om elke story concreet te testen en te valideren tijdens de testfase.
+De user stories beschrijven alle kernfunctionaliteiten vanuit het perspectief van de twee gebruikersrollen. De acceptatiecriteria laten toe om elke story concreet te testen en te valideren tijdens de testfase.

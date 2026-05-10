@@ -1,15 +1,15 @@
 # Testing
 
 ## Projectnaam
-Aquafin Smart Maintenance Platform
+Aquafin Technieker Platform
 
 ---
 
 # 1. Doel
 
-Dit document beschrijft het testplan voor de Aquafin Smart Maintenance Platform applicatie.
+Dit document beschrijft het testplan voor de Aquafin Technieker Platform applicatie.
 
-De testcases zijn rechtstreeks afgeleid van de acceptatiecriteria uit de user stories (03-user-stories.md). Dit garandeert dat elke user story gevalideerd wordt voor oplevering.
+De testcases zijn rechtstreeks afgeleid van de acceptatiecriteria uit de user stories (04-user-stories.md). Dit garandeert dat elke user story gevalideerd wordt voor oplevering.
 
 Het document bestaat uit twee delen:
 - **Testplan** (nu ingevuld): wat wordt getest en hoe
@@ -24,8 +24,7 @@ Voor dit project wordt **manueel functioneel testen** toegepast. Elke testcase w
 
 ## Testomgeving
 - Browser: Chrome (meest recente versie)
-- Frontend: React applicatie lokaal gestart (`npm start`)
-- Backend: Node.js + Express lokaal gestart (`node app.js`)
+- Frontend en backend lokaal gestart
 - Database: SQLite met seed data geladen
 
 ## Wanneer wordt getest?
@@ -44,7 +43,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 # 3. Testcases
 
-## TC-01 — Materiaal bestellen (US-01)
+## TC-01 - Materiaal bestellen (US-01)
 
 ### TC-01a - Succesvolle bestelling
 
@@ -162,7 +161,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 | Verwacht resultaat | Werkelijk resultaat | Status |
 |---|---|---|
-| Alle actieve materialen worden getoond, gesorteerd per categorie | | TODO |
+| Alle actieve materialen worden getoond | | TODO |
 
 ---
 
@@ -194,7 +193,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 | Precondities | Materiaallijst is geladen |
 
 **Stappen:**
-1. Selecteer de categorie "Riolering & Aquafin tools" in het filterdropdown
+1. Selecteer een categorie in het filterdropdown
 
 | Verwacht resultaat | Werkelijk resultaat | Status |
 |---|---|---|
@@ -204,21 +203,21 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 ## TC-04 - Aanbevolen tools (US-04)
 
-### TC-04a — Flood tools bovenaan bij hoog risico
+### TC-04a - Flood tools bovenaan bij hoog risico
 
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-04a |
 | User Story | US-04 |
-| Beschrijving | Flood tools verschijnen bovenaan wanneer het risiconiveau hoog is |
-| Precondities | Risicoforecast geeft "Hoog" terug voor het huidig seizoen |
+| Beschrijving | Flood tools verschijnen bovenaan wanneer het risiconiveau hoog of gemiddeld is |
+| Precondities | Risicoforecast geeft "Hoog" of "Gemiddeld" terug voor het huidig seizoen |
 
 **Stappen:**
 1. Open de materiaallijst of het dashboard
 
 | Verwacht resultaat | Werkelijk resultaat | Status |
 |---|---|---|
-| Flood tools staan bovenaan met een visuele markering (badge of label) | | TODO |
+| Flood tools staan bovenaan met een visuele markering | | TODO |
 
 ---
 
@@ -256,7 +255,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 | Verwacht resultaat | Werkelijk resultaat | Status |
 |---|---|---|
-| Het risiconiveau van het huidige seizoen (Laag / Gemiddeld / Hoog) is zichtbaar zonder te scrollen | | TODO |
+| Het risiconiveau van het huidige seizoen (Laag/Gemiddeld/Hoog) is zichtbaar zonder te scrollen | | TODO |
 
 ---
 
@@ -265,7 +264,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-05b |
-| User Story | US-05, US-06 |
+| User Story | US-05 |
 | Beschrijving | Risicoanalyse pagina toont forecast voor de komende 5 jaar |
 | Precondities | Applicatie is gestart, seed data is geladen |
 
@@ -283,7 +282,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-05c |
-| User Story | US-05, US-06 |
+| User Story | US-05 |
 | Beschrijving | Risiconiveaus zijn visueel onderscheiden via kleur |
 | Precondities | Risicoanalyse pagina is geladen met resultaten |
 
@@ -296,14 +295,14 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 ---
 
-## TC-06 — Materiaal toevoegen (US-08)
+## TC-06 - Materiaal toevoegen (US-06)
 
 ### TC-06a - Nieuw materiaal toevoegen
 
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-06a |
-| User Story | US-08 |
+| User Story | US-06 |
 | Beschrijving | Beheerder voegt een nieuw materiaal toe aan de catalogus |
 | Precondities | Beheerderspagina is open |
 
@@ -323,7 +322,7 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-06b |
-| User Story | US-08 |
+| User Story | US-06 |
 | Beschrijving | Beheerder probeert een naam toe te voegen die al bestaat |
 | Precondities | Beheerderspagina is open, "Dompelpomp" bestaat al |
 
@@ -338,14 +337,14 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 ---
 
-## TC-07 - Materiaal verwijderen (US-09)
+## TC-07 - Materiaal verwijderen (US-07)
 
 ### TC-07a - Materiaal deactiveren
 
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-07a |
-| User Story | US-09 |
+| User Story | US-07 |
 | Beschrijving | Beheerder verwijdert een materiaal uit de catalogus |
 | Precondities | Beheerderspagina is open, materiaal bestaat en is actief |
 
@@ -355,18 +354,18 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 
 | Verwacht resultaat | Werkelijk resultaat | Status |
 |---|---|---|
-| Materiaal verdwijnt uit de actieve catalogus, is nog aanwezig in de database met isActive = 0 | | TODO |
+| Materiaal verdwijnt uit de actieve catalogus maar blijft bewaard voor historische bestellingen | | TODO |
 
 ---
 
-## TC-08 - Categorieën beheren (US-10)
+## TC-08 - Categorieën beheren (US-08)
 
 ### TC-08a - Materiaal correct gecategoriseerd
 
 | Veld | Inhoud |
 |---|---|
 | Testcase ID | TC-08a |
-| User Story | US-10 |
+| User Story | US-08 |
 | Beschrijving | Nieuw materiaal wordt correct ingedeeld in de gekozen categorie |
 | Precondities | Beheerderspagina is open |
 
@@ -382,8 +381,6 @@ Na afronding van elke module worden de bijhorende testcases uitgevoerd. Na volle
 ---
 
 # 4. Risicoberekening Verificatie
-
-Deze sectie verifieert de correctheid van de Risk Analysis Engine op basis van de bekende inputdata.
 
 ### TC-09 - Risicodrempels correct toegepast
 
@@ -422,7 +419,7 @@ Deze sectie verifieert de correctheid van de Risk Analysis Engine op basis van d
 | TC-03a | Materiaaloverzicht laden | TODO |
 | TC-03b | Zoeken op naam | TODO |
 | TC-03c | Filteren op categorie | TODO |
-| TC-04a | Flood tools bij hoog risico | TODO |
+| TC-04a | Flood tools bij hoog of gemiddeld risico | TODO |
 | TC-04b | Geen prioritering bij laag risico | TODO |
 | TC-05a | Huidig risico op dashboard | TODO |
 | TC-05b | Forecast komende 5 jaar | TODO |
@@ -433,7 +430,7 @@ Deze sectie verifieert de correctheid van de Risk Analysis Engine op basis van d
 | TC-08a | Materiaal correct gecategoriseerd | TODO |
 | TC-09 | Risicodrempels correct toegepast | TODO |
 
-**Totaal:** 18 testcases — 0 geslaagd / 0 gefaald / 18 niet getest
+**Totaal:** 18 testcases — 0 geslaagd/0 gefaald/18 niet getest
 
 ---
 
@@ -456,9 +453,9 @@ Deze sectie verifieert de correctheid van de Risk Analysis Engine op basis van d
 
 *In te vullen na uitvoering van alle testcases.*
 
-Totaal aantal testcases: 18
-Geslaagd: —
-Gefaald: —
-Niet getest: 18
+- Totaal aantal testcases: 18
+- Geslaagd: -
+- Gefaald: -
+- Niet getest: 18
 
-Opmerkingen: —
+Opmerkingen: -

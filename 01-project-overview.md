@@ -1,7 +1,7 @@
 # Project Overview
 
 ## Projectnaam
-Aquafin Smart Maintenance Platform
+Aquafin Technieker Platform
 
 ---
 
@@ -65,20 +65,9 @@ Naast het zuiveringsproces voeren techniekers dagelijks onderhoud uit:
 
 ---
 
-# 4. Modules van de Applicatie
+# 4. Functionaliteiten van de Applicatie
 
-## 4.1 Procesanalyse Module
-
-Bevat de documentatie van het Aquafin bedrijfsproces:
-- BPMN-flowchart van het waterzuiveringsproces
-- beschrijving van beslissingspunten
-- analyse van onderhoudsactiviteiten
-
-Doel: aantonen dat het bedrijfsproces correct begrepen wordt.
-
----
-
-## 4.2 Weers- en Risicoanalyse Module
+## 4.1 Weers- en Risicoanalyse
 
 Deze module:
 - verwerkt historische KMI-neerslaggegevens (2004–2025)
@@ -91,7 +80,7 @@ Doel: preventief risico's detecteren zodat techniekers tijdig kunnen anticiperen
 
 ---
 
-## 4.3 Materiaalbeheer Module
+## 4.2 Materiaalbeheer
 
 Techniekers en beheerders kunnen:
 - de volledige materiaalcatalogus bekijken
@@ -103,7 +92,7 @@ Doel: onderhoudswerken efficiënter organiseren met een up-to-date catalogus.
 
 ---
 
-## 4.4 Bestelmodule
+## 4.3 Bestellen
 
 Techniekers kunnen:
 - materialen selecteren uit de catalogus
@@ -115,7 +104,7 @@ Doel: dagelijkse materiaalbevoorrading digitaal en gestructureerd afhandelen.
 
 ---
 
-## 4.5 Slimme Aanbevelingen
+## 4.4 Slimme Aanbevelingen
 
 Wanneer een periode een verhoogd overstromingsrisico heeft:
 - worden relevante flood tools automatisch bovenaan de materiaallijst geplaatst
@@ -137,32 +126,4 @@ Doel: techniekers sneller voorbereiden op interventies zonder zelf te hoeven zoe
 | Rol | Taken |
 |---|---|
 | Technieker | Installaties controleren, materiaal bestellen, risico's raadplegen |
-| Planner | Risicoperiodes analyseren, onderhoudswerken preventief plannen |
 | Beheerder | Materiaalcatalogus beheren (toevoegen, verwijderen, categoriseren) |
-
----
-
-# 6. Technologieën
-
-| Laag | Technologie | Motivatie |
-|---|---|---|
-| Frontend | React | Componentgebaseerd, geschikt voor dashboard-applicaties |
-| Backend | Node.js + Express | Zelfde taal als frontend, eenvoudig REST API's bouwen |
-| Database | SQLite | Geen serverinstallatie nodig, ideaal voor individueel project |
-| Version Control | Git + GitHub | Versiebeheer en documentatie-opvolging |
-
----
-
-# 7. Verwachte Resultaten
-
-De applicatie moet:
-- een duidelijk overzicht geven van overstromingsrisico's voor de komende 5 jaar
-- techniekers ondersteunen bij materiaalbeheer en dagelijkse bestellingen
-- onderhoudswerken efficiënter maken via slimme aanbevelingen
-- historische neerslagdata combineren met praktische acties
-
-Het project als geheel moet aantonen dat:
-- een gestructureerde analyse uitgevoerd werd
-- software engineering best practices toegepast werden
-- het volledige ontwikkelingsproces gedocumenteerd is
-- de student zelfstandig een volwaardige webapplicatie kan realiseren

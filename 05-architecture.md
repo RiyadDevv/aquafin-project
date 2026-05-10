@@ -1,7 +1,7 @@
 # Architecture
 
 ## Projectnaam
-Aquafin Smart Maintenance Platform
+Aquafin Technieker Platform
 
 ---
 
@@ -19,25 +19,20 @@ De architectuur documenteert:
 
 # 2. Architectuur Overzicht
 
-De applicatie volgt een klassieke **3-lagenarchitectuur** (Three-Tier Architecture):
+De applicatie volgt een klassieke 3-lagenarchitectuur:
 
 ```text
 ┌─────────────────────────────────┐
 │         Presentatielaag         │  React (Frontend)
 ├─────────────────────────────────┤
 │          Businesslaag           │  Node.js + Express (Backend API)
-│  ┌──────────┐  ┌─────────────┐  │
-│  │   Risk   │  │Recommenda-  │  │
-│  │ Analysis │  │tion Engine  │  │
-│  └──────────┘  └─────────────┘  │
-│  ┌──────────┐  ┌─────────────┐  │
-│  │ Material │  │   Order     │  │
-│  │  Mgmt    │  │   Mgmt      │  │
-│  └──────────┘  └─────────────┘  │
 ├─────────────────────────────────┤
 │           Datalaag              │  SQLite (Database)
 └─────────────────────────────────┘
+
 ```
+
+De drie lagen zijn bewust gescheiden zodat elke laag onafhankelijk aangepast kan worden.
 
 ---
 
@@ -55,13 +50,7 @@ De frontend is de gebruikersinterface waarmee techniekers en beheerders interage
 
 ## Technologie
 
-**React**
-
-Keuze gemotiveerd door:
-- componentgebaseerde opbouw: elk scherm is een herbruikbaar component
-- efficiënte rendering bij dataupdates
-- breed ondersteuning en documentatie
-- geschikt voor responsive webapplicaties
+**React** is gekozen omdat het componentgebaseerd werkt (i.e. elk scherm is een herbruikbaar component) en omdat het breed gedocumenteerd is en goed geschikt voor dashboard-applicaties.
 
 ---
 
@@ -79,32 +68,15 @@ De backend bevat alle businesslogica en stelt een REST API ter beschikking.
 
 ## Technologie
 
-**Node.js + Express**
-
-Keuze gemotiveerd door:
-- zelfde taal als frontend (JavaScript), wat de leercurve beperkt
-- eenvoudig REST API's bouwen met Express
-- goede integratie met SQLite via npm-packages
+**Node.js + Express** is gekozen omdat het dezelfde taal gebruikt als de frontend (JavaScript), en omdat Express eenvoudig REST API's mogelijk maakt.
 
 ---
 
 # 5. Database
 
-## Keuze: SQLite
+## Technologie
 
-Voor dit project wordt **SQLite** gebruikt als database.
-
-### Motivatie
-
-| Criterium | SQLite | MySQL |
-|---|---|---|
-| Serverinstallatie nodig | Nee | Ja |
-| Geschikt voor individueel project | Ja | Overkill |
-| Integratie met Node.js | Eenvoudig (better-sqlite3) | Vereist extra configuratie |
-| Bestandsgebaseerd | Ja (1 .db bestand) | Nee |
-| Performantie voor deze schaal | Voldoende | Voldoende |
-
-SQLite is de meest pragmatische keuze voor een individueel project zonder aparte serverinfrastructuur. De database leeft als één bestand in de projectmap en vereist geen externe installatie.
+**SQLite** is gekozen omdat het geen serverinstallatie vereist en als één bestand in de projectmap leeft. Voor een individueel project is dit de meest pragmatische keuze; er is geen externe infrastructuur nodig.
 
 ## Inhoud
 
@@ -115,7 +87,7 @@ De database bevat:
 
 ---
 
-# 6. Modules
+# 6. Technische Componenten
 
 ## 6.1 Risk Analysis Engine
 
@@ -133,7 +105,7 @@ Stap 6: Vergelijk voorspelde waarde met seizoensdrempel
 Stap 7: Ken risiconiveau toe
 ```
 
-### Seizoensdrempels uit de opdracht
+### Seizoensdrempels
 
 | Seizoen | Maanden | Drempel (mm) |
 |---|---|---|
@@ -160,12 +132,11 @@ Stap 7: Ken risiconiveau toe
 
 ```text
 IF risiconiveau == "Hoog"
-  => toon alle materialen met isFloodTool = true bovenaan
-  => markeer met visuele badge
-  
+  => toon flood tools bovenaan met visuele markering
+
 ELSE IF risiconiveau == "Gemiddeld"
   => toon flood tools in een aparte "Aanbevolen" sectie
-  
+
 ELSE (Laag)
   => toon normale materiaallijst zonder prioritering
 ```
@@ -181,20 +152,19 @@ ELSE (Laag)
 
 ---
 
-## 6.3 Material Management Module
+## 6.3 Material Management
 
-**Verantwoordelijkheid:** CRUD-operaties op materialen en categorieën.
+**Verantwoordelijkheid:** beheren van materialen en categorieën.
 
 Functionaliteiten:
-- opvragen van alle materialen (gefilterd op actief/inactief)
+- opvragen van alle actieve materialen
 - toevoegen van nieuw materiaal
 - deactiveren van materiaal (soft delete)
-- categoriseren en filteren
-- zoeken op naam
+- zoeken en filteren op categorie
 
 ---
 
-## 6.4 Order Management Module
+## 6.4 Order Management
 
 **Verantwoordelijkheid:** aanmaken en opslaan van bestellingen.
 
@@ -212,20 +182,15 @@ Functionaliteiten:
 ```text
 Historische neerslagdata (database)
          ↓
-  Season Aggregation
-  (groepeer per seizoen)
+  Seizoensgroepering
          ↓
-  Trend Calculation
-  (lineaire regressie)
+  Trendberekening (lineaire regressie)
          ↓
-  Threshold Comparison
-  (vergelijk met drempelwaarden)
+  Vergelijking met drempelwaarden
          ↓
-  Risk Level toekenning
-  (Laag/Gemiddeld/Hoog)
+  Risiconiveau (Laag / Gemiddeld / Hoog)
          ↓
   Frontend Dashboard
-  (visualisatie per seizoen)
 ```
 
 ---
@@ -233,15 +198,13 @@ Historische neerslagdata (database)
 ## Slimme Aanbevelingen
 
 ```text
-Risk Level (van Risk Analysis Engine)
+Risiconiveau (van Risk Analysis Engine)
          ↓
   Recommendation Engine
-  (regel-gebaseerde logica)
          ↓
-  Filter: isFloodTool = true
+  Flood tools gefilterd en geprioriteerd
          ↓
   Frontend Aanbevelingssectie
-  (gesorteerd bovenaan bij hoog risico)
 ```
 
 ---
@@ -252,15 +215,12 @@ Risk Level (van Risk Analysis Engine)
 Technieker selecteert materialen + leverdatum
          ↓
   Frontend validatie
-  (datum aanwezig? items geselecteerd?)
          ↓
   POST /api/orders
          ↓
   Backend validatie
-  (datum in toekomst? geldige materiaal-IDs?)
          ↓
   Database opslag
-  (Order + OrderItems)
          ↓
   Frontend bevestiging
 ```
@@ -286,35 +246,10 @@ Technieker selecteert materialen + leverdatum
 
 ```text
 aquafin-platform/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── RiskAnalysis.jsx
-│   │   │   ├── MaterialList.jsx
-│   │   │   └── OrderForm.jsx
-│   │   ├── App.jsx
-│   │   └── index.js
-│   └── package.json
-│
-├── backend/
-│   ├── src/
-│   │   ├── routes/
-│   │   │   ├── materials.js
-│   │   │   ├── orders.js
-│   │   │   └── risk.js
-│   │   ├── engines/
-│   │   │   ├── riskAnalysis.js
-│   │   │   └── recommendations.js
-│   │   ├── db/
-│   │   │   ├── database.js
-│   │   │   └── seed.js
-│   │   └── app.js
-│   └── package.json
-│
-├── docs/
-│   └── (alle .md documentatiebestanden)
-│
+├── frontend/     (gebruikersinterface)
+├── backend/      (API en businesslogica)
+│   └── db/       (database en seed data)
+├── docs/         (documentatie)
 └── README.md
 ```
 
@@ -322,16 +257,16 @@ aquafin-platform/
 
 # 10. Technologieënoverzicht
 
-| Laag | Technologie | Versie | Motivatie |
-|---|---|---|---|
-| Frontend | React | 18.x | Componentgebaseerd, breed gebruikt |
-| Backend | Node.js | 20.x LTS | Zelfde taal als frontend |
-| API Framework | Express | 4.x | Eenvoudig en lichtgewicht |
-| Database | SQLite | 3.x | Geen serverinstallatie nodig |
-| Version Control | Git + GitHub | - | Versiebeheer en documentatie |
+| Laag | Technologie | Versie |
+|---|---|---|
+| Frontend | React | 18.x |
+| Backend | Node.js | 20.x LTS |
+| API Framework | Express | 4.x |
+| Database | SQLite | 3.x |
+| Version Control | Git + GitHub | - |
 
 ---
 
 # 11. Conclusie
 
-De gekozen architectuur is modulair, eenvoudig op te zetten en goed schaalbaar voor de scope van dit project. De keuze voor SQLite elimineert onnodige infrastructuurcomplexiteit voor een individueel project. De scheiding tussen frontend, backend en database zorgt voor onderhoudbaarheid en maakt het mogelijk elke laag onafhankelijk te testen.
+De gekozen architectuur is modulair, eenvoudig op te zetten en schaalbaar voor de scope van dit project. De scheiding tussen frontend, backend en database zorgt voor onderhoudbaarheid en maakt het mogelijk elke laag onafhankelijk te testen.

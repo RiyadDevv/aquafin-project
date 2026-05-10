@@ -1,20 +1,20 @@
 # Requirements
 
 ## Projectnaam
-Aquafin Smart Maintenance Platform
+Aquafin Technieker Platform
 
 ---
 
 # 1. Introductie
 
-Dit document beschrijft de functionele en non-functionele requirements van de Aquafin Smart Maintenance Platform applicatie.
+Dit document beschrijft de functionele en non-functionele requirements van de Aquafin Technieker Platform applicatie.
 
 De requirements definiëren:
 - welke functionaliteiten het systeem moet bevatten
 - welke kwaliteitsvoorwaarden van toepassing zijn
 - welke technische verplichtingen gelden
 
-Elke functionele requirement is gekoppeld aan de user story die hem motiveert (**traceability**). Dit laat toe om tijdens de testfase te verifiëren of alle user stories correct geïmplementeerd zijn.
+Elke functionele requirement is gekoppeld aan de user story die hem motiveert. Dit laat toe om tijdens de testfase te verifiëren of alle user stories correct geïmplementeerd zijn.
 
 ---
 
@@ -22,10 +22,10 @@ Elke functionele requirement is gekoppeld aan de user story die hem motiveert (*
 
 ## 2.1 Risicoanalyse
 
-### FR-01 - Historische data verwerken
-Het systeem moet de historische KMI-neerslaggegevens (2004–2025) kunnen inladen en opslaan als seed data.
+### FR-01 - Historische data gebruiken
+Het systeem moet de historische KMI-neerslaggegevens (2004–2025) gebruiken als basis voor de risicoanalyse en forecast.
 
-*Gelinkt aan: US-05, US-06*
+*Gelinkt aan: US-05*
 
 ---
 
@@ -36,31 +36,31 @@ Het systeem moet neerslaggegevens correct groeperen per seizoen:
 - Zomer: juni, juli, augustus
 - Herfst: september, oktober, november
 
-*Gelinkt aan: US-05, US-06*
+*Gelinkt aan: US-05*
 
 ---
 
 ### FR-03 - Seizoensneerslag berekenen
 Het systeem moet de totale neerslag per seizoen berekenen op basis van de maandelijkse meetwaarden.
 
-*Gelinkt aan: US-05, US-06*
+*Gelinkt aan: US-05*
 
 ---
 
 ### FR-04 - Risicoforecast genereren
 Het systeem moet op basis van historische neerslagdata en een trendberekening (lineaire regressie) overstromingsrisico's voorspellen voor de komende 5 jaar, per seizoen.
 
-*Gelinkt aan: US-05, US-06*
+*Gelinkt aan: US-05*
 
 ---
 
 ### FR-05 - Risicoklassificatie
 Het systeem moet elk voorspeld seizoen classificeren als:
-- **Laag**: voorspelde neerslag onder de seizoensdrempel
-- **Gemiddeld**: voorspelde neerslag tussen drempel en drempel + 10%
-- **Hoog**: voorspelde neerslag boven drempel + 10%
+- Laag: voorspelde neerslag onder de seizoensdrempel
+- Gemiddeld: voorspelde neerslag tussen drempel en drempel + 10%
+- Hoog: voorspelde neerslag boven drempel + 10%
 
-Seizoensdrempels (conform de opdracht):
+Seizoensdrempels:
 
 | Seizoen | Drempel |
 |---|---|
@@ -69,21 +69,21 @@ Seizoensdrempels (conform de opdracht):
 | Zomer | 260 mm |
 | Herfst | 280 mm |
 
-*Gelinkt aan: US-05, US-06*
+*Gelinkt aan: US-05*
 
 ---
 
 ### FR-06 - Risico visueel weergeven
-Het systeem moet het risiconiveau per seizoen visueel tonen via kleurcodering (groen / oranje / rood).
+Het systeem moet het risiconiveau per seizoen visueel tonen via kleurcodering (groen/oranje/rood).
 
-*Gelinkt aan: US-05, US-06*
+*Gelinkt aan: US-05*
 
 ---
 
 ## 2.2 Materiaalbeheer
 
 ### FR-07 - Materialen weergeven
-Het systeem moet alle actieve materialen tonen, gesorteerd per categorie.
+Het systeem moet alle actieve materialen tonen.
 
 *Gelinkt aan: US-03*
 
@@ -99,21 +99,21 @@ Het systeem moet gebruikers toelaten te zoeken op naam en te filteren op categor
 ### FR-09 - Materiaal toevoegen
 Het systeem moet een beheerder toelaten nieuwe materialen toe te voegen met naam, categorie en flood tool markering.
 
-*Gelinkt aan: US-08*
+*Gelinkt aan: US-06*
 
 ---
 
 ### FR-10 - Materiaal deactiveren
 Het systeem moet een beheerder toelaten materialen te deactiveren (soft delete), zodat ze niet meer zichtbaar zijn in de catalogus maar historische bestellingen intact blijven.
 
-*Gelinkt aan: US-09*
+*Gelinkt aan: US-07*
 
 ---
 
 ### FR-11 - Materialen categoriseren
 Het systeem moet materialen indelen in categorieën en filteren op categorie ondersteunen.
 
-*Gelinkt aan: US-10*
+*Gelinkt aan: US-08*
 
 ---
 
@@ -153,17 +153,17 @@ Bij een fout wordt een duidelijke foutmelding getoond.
 
 ## 2.4 Slimme Aanbevelingen
 
-### FR-16 — Risicoperiodes detecteren
+### FR-16 - Risicoperiodes detecteren
 Het systeem moet automatisch detecteren of het huidige of komende seizoen een verhoogd overstromingsrisico heeft.
 
-*Gelinkt aan: US-04, US-07*
+*Gelinkt aan: US-04*
 
 ---
 
 ### FR-17 - Flood tools aanbevelen
-Het systeem moet tijdens een periode met hoog of gemiddeld risico de materialen met `isFloodTool = true` automatisch prioriteren.
+Het systeem moet tijdens een periode met hoog of gemiddeld overstromingsrisico de relevante flood tools automatisch bovenaan de materiaallijst plaatsen.
 
-*Gelinkt aan: US-04, US-07*
+*Gelinkt aan: US-04*
 
 ---
 
@@ -189,7 +189,7 @@ Het systeem moet een dashboard bevatten dat toont:
 ### FR-20 - Risicoanalyse pagina
 Het systeem moet een aparte pagina bevatten met de volledige forecast voor de komende 5 jaar, per seizoen en per jaar.
 
-*Gelinkt aan: US-06*
+*Gelinkt aan: US-05*
 
 ---
 
@@ -210,7 +210,7 @@ Het systeem moet een bestelpagina bevatten waarop een technieker materialen kan 
 ### FR-23 - Beheerderspagina
 Het systeem moet een beheerderspagina bevatten voor het toevoegen en deactiveren van materialen.
 
-*Gelinkt aan: US-08, US-09, US-10*
+*Gelinkt aan: US-06, US-07, US-08*
 
 ---
 
@@ -228,55 +228,35 @@ Het risiconiveau van het huidige seizoen moet zichtbaar zijn zonder te scrollen,
 
 ---
 
-### NFR-03 - Aanbevelingen zonder extra stappen
-Aanbevolen flood tools worden automatisch bovenaan geplaatst bij verhoogd risico, zonder dat de gebruiker daarvoor een extra actie moet ondernemen.
-
----
-
 ## 3.2 Betrouwbaarheid
 
-### NFR-04 - Correcte risicoberekening
+### NFR-03 - Correcte risicoberekening
 De risicoforecast moet consistent dezelfde resultaten geven bij dezelfde inputdata. De berekening is gebaseerd op de seizoensdrempels uit de opdracht.
-
----
-
-### NFR-05 - Validatie van invoer
-Het systeem weigert ongeldige bestellingen (geen datum, geen items, datum in het verleden) en informeert de gebruiker met een duidelijke melding.
 
 ---
 
 ## 3.3 Compatibiliteit
 
-### NFR-06 - Browserondersteuning
+### NFR-04 - Browserondersteuning
 De applicatie werkt correct in moderne browsers: Chrome, Firefox en Edge (meest recente versies).
-
----
-
-### NFR-07 - Responsief design
-De applicatie is bruikbaar op zowel desktop als mobiele schermen. De lay-out past zich aan aan de schermgrootte.
 
 ---
 
 ## 3.4 Onderhoudbaarheid
 
-### NFR-08 - Modulaire code
-De applicatie is opgebouwd uit duidelijk afgebakende modules (Risk Engine, Recommendation Engine, Material Management, Order Management) die onafhankelijk aangepast kunnen worden.
-
----
-
-### NFR-09 - Gedocumenteerde code
+### NFR-05 - Gedocumenteerde code
 Functies en modules worden voorzien van korte commentaar zodat de werking begrijpbaar is zonder de documentatie erbij te raadplegen.
 
 ---
 
-### NFR-10 - Versiebeheer
+### NFR-06 - Versiebeheer
 Alle code en documentatie worden bijgehouden in een GitHub repository met betekenisvolle commit messages per afgewerkte functionaliteit.
 
 ---
 
 # 4. Technische Requirements
 
-### TR-01 — Webgebaseerde frontend
+### TR-01 - Webgebaseerde frontend
 De applicatie beschikt over een webgebaseerde React frontend die toegankelijk is via een browser.
 
 ---
@@ -305,13 +285,11 @@ Overzicht van de koppeling tussen user stories en functionele requirements.
 | US-01 Materiaal bestellen | FR-12, FR-14, FR-15 |
 | US-02 Leverdatum kiezen | FR-13, FR-15 |
 | US-03 Catalogus raadplegen | FR-07, FR-08, FR-21 |
-| US-04 Aanbevolen tools bekijken | FR-17, FR-18, FR-21 |
-| US-05 Risico bekijken | FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-19 |
-| US-06 Risicoperiodes analyseren | FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-20 |
-| US-07 Prioritaire materialen | FR-16, FR-17 |
-| US-08 Materiaal toevoegen | FR-09, FR-23 |
-| US-09 Materiaal verwijderen | FR-10, FR-23 |
-| US-10 Categorieën beheren | FR-11, FR-23 |
+| US-04 Aanbevolen tools bekijken | FR-16, FR-17, FR-18, FR-21 |
+| US-05 Overstromingsrisico bekijken | FR-01, FR-02, FR-03, FR-04, FR-05, FR-06, FR-19, FR-20 |
+| US-06 Materiaal toevoegen | FR-09, FR-23 |
+| US-07 Materiaal verwijderen | FR-10, FR-23 |
+| US-08 Categorieën beheren | FR-11, FR-23 |
 
 ---
 
