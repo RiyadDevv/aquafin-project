@@ -3,6 +3,15 @@ const app = express();
 
 app.use(express.json());
 
+const materialsRouter = require('./routes/materials');
+app.use('/api/materials', materialsRouter);
+
+const categoriesRouter = require('./routes/categories');
+app.use('/api/categories', categoriesRouter);
+
+const ordersRouter = require('./routes/orders');
+app.use('/api/orders', ordersRouter);
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
