@@ -12,6 +12,12 @@ app.use('/api/categories', categoriesRouter);
 const ordersRouter = require('./routes/orders');
 app.use('/api/orders', ordersRouter);
 
+const riskRouter = require('./routes/risk');
+app.use('/api/risk', riskRouter);
+
+const recommendationsRouter = require('./routes/recommendations');
+app.use('/api/recommendations', recommendationsRouter);
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
