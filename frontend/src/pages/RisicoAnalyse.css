@@ -1,0 +1,47 @@
+.risico-analyse h1 {
+  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.forecast-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.forecast-table th {
+  background-color: #1a1a2e;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.forecast-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.season-label {
+  font-weight: bold;
+  color: #1a1a2e;
+  text-align: left !important;
+}
+
+.risk-badge {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.risk-mm {
+  font-size: 0.8rem;
+  color: #666;
+}
