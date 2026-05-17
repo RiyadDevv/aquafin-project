@@ -1,0 +1,72 @@
+.materialen h1 {
+  margin-bottom: 1.5rem;
+  color: #1a1a2e;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  width: 300px;
+}
+
+.category-select {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.flood-section {
+  margin-bottom: 2rem;
+}
+
+.flood-section h2 {
+  margin-bottom: 1rem;
+}
+
+.all-materials h2 {
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.material-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.material-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.material-card.flood-tool {
+  border: 2px solid #f4a261;
+}
+
+.flood-badge {
+  background: #f4a261;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
