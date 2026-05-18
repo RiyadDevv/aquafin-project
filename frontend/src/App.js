@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import RisicoAnalyse from './pages/RisicoAnalyse';
 import Materialen from './pages/Materialen';
 import Bestellen from './pages/Bestellen';
+import Beheer from './pages/Beheer';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path="/risico" element={<RisicoAnalyse />} />
           <Route path="/materialen" element={<Materialen />} />
           <Route path="/bestellen" element={<Bestellen />} />
-          <Route path="/beheer" element={<h1>Beheer</h1>} />
+          <Route path="/beheer" element={<Beheer />} />
         </Routes>
       </div>
     </Router>
