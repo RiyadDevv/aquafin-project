@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Materialen.css';
+import Spinner from '../components/Spinner';
 
 function getRiskColor(level) {
   if (level === 'high') return '#e63946';
@@ -29,7 +30,7 @@ function Materialen() {
     });
   }, []);
 
-  if (loading) return <p>Laden...</p>;
+if (loading) return <Spinner />;
 
   const filtered = materials.filter(m => {
     const matchSearch = m.name.toLowerCase().includes(search.toLowerCase());

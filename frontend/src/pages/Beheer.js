@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Beheer.css';
+import Spinner from '../components/Spinner';
 
 function Beheer() {
   const [materials, setMaterials] = useState([]);
@@ -60,7 +61,7 @@ function Beheer() {
     }
   };
 
-  if (loading) return <p>Laden...</p>;
+if (loading) return <Spinner />;
 
   return (
     <div className="beheer">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Bestellen.css';
+import Spinner from '../components/Spinner';
 
 function Bestellen() {
   const [materials, setMaterials] = useState([]);
@@ -64,7 +65,7 @@ function Bestellen() {
     }
   };
 
-  if (loading) return <p>Laden...</p>;
+if (loading) return <Spinner />;
 
   const filtered = materials.filter(m => {
     const matchSearch = m.name.toLowerCase().includes(search.toLowerCase());

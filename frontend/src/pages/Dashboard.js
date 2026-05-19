@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
+import Spinner from '../components/Spinner';
 
 function getRiskColor(level) {
   if (level === 'high') return '#e63946';
@@ -30,9 +31,8 @@ function Dashboard() {
     });
   }, []);
 
-  if (loading) return <p>Laden...</p>;
+if (loading) return <Spinner />;
 
-  const currentSeason = recommendations.materials ? recommendations.riskLevel : 'low';
   const floodTools = recommendations.materials.filter(m => m.isFloodTool === 1);
   const upcomingSeasons = forecast.filter(f => f.year === new Date().getFullYear() + 1);
 

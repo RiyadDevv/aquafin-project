@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './RisicoAnalyse.css';
+import Spinner from '../components/Spinner';
 
 function getRiskColor(level) {
   if (level === 'high') return '#e63946';
@@ -25,7 +26,7 @@ function RisicoAnalyse() {
     });
   }, []);
 
-  if (loading) return <p>Laden...</p>;
+if (loading) return <Spinner />;
 
   const years = [...new Set(forecast.map(f => f.year))];
   const seasons = ['Winter', 'Lente', 'Zomer', 'Herfst'];
