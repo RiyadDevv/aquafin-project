@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: 'Naam en categorie zijn verplicht.' });
   }
 
-  const existing = db.prepare('SELECT id FROM materials WHERE name = ?').get(name);
+const existing = db.prepare('SELECT id FROM materials WHERE name = ? AND isActive = 1').get(name);
   if (existing) {
     return res.status(409).json({ error: 'Materiaal met deze naam bestaat al.' });
   }

@@ -15,7 +15,7 @@ function getCurrentRiskLevel() {
   const currentSeason = getCurrentSeason();
 
   const current = forecast.find(
-    f => f.year === currentYear + 1 && f.season === currentSeason
+    f => f.year === currentYear && f.season === currentSeason
   );
 
   return current ? current.riskLevel : 'low';

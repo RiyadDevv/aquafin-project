@@ -11,8 +11,7 @@ function Bestellen() {
   const [deliveryDate, setDeliveryDate] = useState('');
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
+  const [toast, setToast] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,6 +25,11 @@ function Bestellen() {
     });
   }, []);
 
+  const showToast = (msg, type) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3500);
+  };
+
   const handleQuantityChange = (id, value) => {
     const qty = parseInt(value);
     if (qty > 0) {
@@ -38,34 +42,31 @@ function Bestellen() {
   };
 
   const handleSubmit = async () => {
-    setError(null);
-    setMessage(null);
-
-    if (!technicianName) return setError('Naam technieker is verplicht.');
-    if (!deliveryDate) return setError('Leverdatum is verplicht.');
+    if (!technicianName) return showToast('Naam technieker is verplicht.', 'error');
+    if (!deliveryDate) return showToast('Leverdatum is verplicht.', 'error');
 
     const today = new Date().toISOString().split('T')[0];
-    if (deliveryDate <= today) return setError('Kies een datum in de toekomst.');
+    if (deliveryDate <= today) return showToast('Kies een datum in de toekomst.', 'error');
 
     const items = Object.entries(selectedItems).map(([materialId, quantity]) => ({
       materialId: parseInt(materialId),
       quantity
     }));
 
-    if (items.length === 0) return setError('Selecteer minstens één materiaal.');
+    if (items.length === 0) return showToast('Selecteer minstens één materiaal.', 'error');
 
     try {
       await axios.post('/api/orders', { technicianName, deliveryDate, items });
-      setMessage(`Bestelling geplaatst voor ${deliveryDate}!`);
+      showToast(`Bestelling geplaatst voor ${deliveryDate}!`, 'success');
       setSelectedItems({});
       setTechnicianName('');
       setDeliveryDate('');
     } catch (err) {
-      setError(err.response?.data?.error || 'Er ging iets mis.');
+      showToast(err.response?.data?.error || 'Er ging iets mis.', 'error');
     }
   };
 
-if (loading) return <Spinner />;
+  if (loading) return <Spinner />;
 
   const filtered = materials.filter(m => {
     const matchSearch = m.name.toLowerCase().includes(search.toLowerCase());
@@ -76,9 +77,6 @@ if (loading) return <Spinner />;
   return (
     <div className="bestellen">
       <h1>Bestelling Plaatsen</h1>
-
-      {message && <div className="alert success">{message}</div>}
-      {error && <div className="alert error">{error}</div>}
 
       <div className="order-form">
         <input
@@ -132,9 +130,17 @@ if (loading) return <Spinner />;
         ))}
       </div>
 
-      <button className="submit-btn" onClick={handleSubmit}>
-        Bestelling Bevestigen
-      </button>
+      <div className="sticky-footer">
+        <button className="submit-btn" onClick={handleSubmit}>
+          Bestelling Bevestigen
+        </button>
+      </div>
+
+      {toast && (
+        <div className={`toast ${toast.type}`}>
+          {toast.msg}
+        </div>
+      )}
     </div>
   );
 }

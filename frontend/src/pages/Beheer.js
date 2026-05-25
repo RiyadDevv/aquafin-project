@@ -9,8 +9,7 @@ function Beheer() {
   const [name, setName] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [isFloodTool, setIsFloodTool] = useState(false);
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
+  const [toast, setToast] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchMaterials = () => {
@@ -28,47 +27,48 @@ function Beheer() {
     fetchMaterials();
   }, []);
 
-  const handleAdd = async () => {
-    setError(null);
-    setMessage(null);
+  const showToast = (msg, type) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3500);
+  };
 
-    if (!name) return setError('Naam is verplicht.');
-    if (!categoryId) return setError('Categorie is verplicht.');
+  const handleAdd = async () => {
+    if (!name) return showToast('Naam is verplicht.', 'error');
+    if (!categoryId) return showToast('Categorie is verplicht.', 'error');
 
     try {
       await axios.post('/api/materials', { name, categoryId: parseInt(categoryId), isFloodTool });
-      setMessage(`"${name}" succesvol toegevoegd.`);
+      showToast(`"${name}" succesvol toegevoegd.`, 'success');
       setName('');
       setCategoryId('');
       setIsFloodTool(false);
       fetchMaterials();
     } catch (err) {
       if (err.response?.status === 409) {
-        setError('Materiaal met deze naam bestaat al.');
+        showToast('Materiaal met deze naam bestaat al.', 'error');
       } else {
-        setError('Er ging iets mis.');
+        showToast('Er ging iets mis.', 'error');
       }
     }
   };
 
   const handleDeactivate = async (id, materialName) => {
+    if (!window.confirm(`Ben je zeker dat je "${materialName}" wil deactiveren?`)) return;
+
     try {
       await axios.delete(`/api/materials/${id}`);
-      setMessage(`"${materialName}" gedeactiveerd.`);
+      showToast(`"${materialName}" gedeactiveerd.`, 'success');
       fetchMaterials();
     } catch (err) {
-      setError('Er ging iets mis bij het deactiveren.');
+      showToast('Er ging iets mis bij het deactiveren.', 'error');
     }
   };
 
-if (loading) return <Spinner />;
+  if (loading) return <Spinner />;
 
   return (
     <div className="beheer">
       <h1>Materiaalbeheer</h1>
-
-      {message && <div className="alert success">{message}</div>}
-      {error && <div className="alert error">{error}</div>}
 
       <div className="add-form">
         <h2>Nieuw Materiaal Toevoegen</h2>
@@ -135,6 +135,12 @@ if (loading) return <Spinner />;
           </tbody>
         </table>
       </div>
+
+      {toast && (
+        <div className={`toast ${toast.type}`}>
+          {toast.msg}
+        </div>
+      )}
     </div>
   );
 }

@@ -70,7 +70,7 @@ function generateForecast() {
 
     const { slope, intercept } = linearRegression(points);
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 0; i <= 5; i++) {
       const year = currentYear + i;
       const predicted = slope * year + intercept;
       const riskLevel = classifyRisk(predicted, threshold);
