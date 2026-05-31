@@ -88,7 +88,7 @@ function Dashboard() {
 
       <div className="section">
         <h2>
-          {showFloodTools ? '⚠️ Aanbevolen Flood Tools' : 'Flood Tools'} — {selectedSeason}
+          {showFloodTools ? '⚠️ Aanbevolen Flood Tools' : 'Flood Tools'} - {selectedSeason}
         </h2>
         {showFloodTools ? (
           <ul className="flood-tools">

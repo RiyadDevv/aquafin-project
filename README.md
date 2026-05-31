@@ -25,7 +25,7 @@ Open een terminal en voer uit:
     cd backend
     npm install
     node db/seed.js
-    node server.js
+    npm start
 
 De backend draait op http://localhost:5000
 
@@ -43,11 +43,11 @@ De applicatie opent automatisch op http://localhost:3000
 
 ## Functionaliteiten
 
-- **Dashboard** - huidig overstromingsrisico + forecast komende seizoenen
-- **Risicoanalyse** - 5-jaar forecast tabel per seizoen met kleurcodering
-- **Materialen** - catalogus met zoek- en filterfunctie + flood tool aanbevelingen
+- **Dashboard** - huidig overstromingsrisico + forecast komende seizoenen + flood tools bij verhoogd risico
+- **Risicoanalyse** - forecast tabel per seizoen met kleurcodering (huidig jaar + 5 jaar)
+- **Materialen** - catalogus met zoek- en filterfunctie + flood tools bovenaan bij verhoogd risico
 - **Bestellen** - materiaal bestellen met leverdatum en validatie
-- **Beheer** - materialen toevoegen en deactiveren
+- **Beheer** - materialen toevoegen en deactiveren met toast feedback
 
 ---
 
@@ -56,7 +56,7 @@ De applicatie opent automatisch op http://localhost:3000
 | Laag | Technologie |
 |---|---|
 | Frontend | React 18 |
-| Backend | Node.js + Express |
+| Backend | Node.js + Express + Nodemon |
 | Database | SQLite (better-sqlite3) |
 
 ---
